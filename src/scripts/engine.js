@@ -19,11 +19,11 @@ const state = {
 }
 
 const playersSides = {
-    player1: "player-field-card",
-    computer: "computer-field-card"
+    player1: "player-cards",
+    computer: "computer-cards"
 }
 
-const pathImages = ".src/assets/icons/";
+const pathImages = "./src/assets/icons/";
 
 const cardData =[
     {
@@ -45,7 +45,7 @@ const cardData =[
     {
         id:2,
         name: "Exodia",
-        type: "Scissores",
+        type: "Scissors",
         img: `${pathImages}exodia.png`,
         Winof: [0],
         LoseOf: [1]
@@ -60,28 +60,36 @@ async function getRandomCardId(){
 async function createCardImage(idCard, fieldSide){
     const cardImage = document.createElement("img");
     cardImage.setAttribute("height", "100px");
-    cardImage.setAttribute("src", ".src/assets/icons/card-back.png");
+    cardImage.setAttribute("src", "./src/assets/icons/card-back.png");
     cardImage.setAttribute("data-id", idCard);
     cardImage.classList.add("card");
 
     if(fieldSide === playersSides.player1){
+        cardImage.addEventListener("mouseover", ()=>{
+            drawSelectCard(idCard);
+         });
+
         cardImage.addEventListener("click", ()=>{
             setCardField(cardImage.getAttribute("data-id"));
-        })
+        });
+        
     }
 
-    cardImage.addEventListener("mouseover", ()=>{
-        drawSelectCard(idCard);
-    });
 
     return cardImage;
+}
+
+async function drawSelectCard(index){
+    state.cardSprites.avatar.src = cardData[index].img;
+    state.cardSprites.name.innerText = cardData[index].name;
+    state.cardSprites.type.innerText = "Attribute : " + cardData[index].type;
 }
 
 async function drawCards (cardNumbers, fieldSide){
     for(let i = 0; i < cardNumbers; i++){
         const randomIdCard = await getRandomCardId();
         const cardImage = await createCardImage(randomIdCard, fieldSide);
-        console.log(fieldSide);
+
         document.getElementById(fieldSide).appendChild(cardImage);
     }
 }
