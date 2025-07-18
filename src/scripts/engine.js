@@ -80,11 +80,19 @@ async function createCardImage(idCard, fieldSide){
     return cardImage;
 }
 
+async function hiddenCardDetails(){
+    state.cardSprites.avatar.src = "";
+    state.cardSprites.name.innerText = "";
+    state.cardSprites.type.innerText = "";
+}
+
 async function setCardField(cardId){
 
     await removeAllCardsImages();
 
     let computerCardId = await getRandomCardId();
+
+    await hiddenCardDetails();
 
     state.fieldCards.player.style.display = "block";
     state.fieldCards.computer.style.display = "block";

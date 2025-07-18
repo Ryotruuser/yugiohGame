@@ -84,7 +84,6 @@
     flex-direction: column;
     padding-top: .1rem;
     height: 300px;
-    margin-top: 5rem;
 }
 
 .versus-top,
@@ -115,6 +114,7 @@
     height: 11.2rem;
     width: 8rem;
     border-radius: 8px;
+    border: 1px solid #fff;
 }
 
 .card {
